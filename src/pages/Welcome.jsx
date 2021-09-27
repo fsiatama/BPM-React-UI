@@ -18,10 +18,7 @@ export default () => {
     <PageContainer>
       <Card>
         <Alert
-          message={intl.formatMessage({
-            id: 'pages.welcome.alertMessage',
-            defaultMessage: 'Faster and stronger heavy-duty components have been released.',
-          })}
+          message='    '
           type="success"
           showIcon
           banner

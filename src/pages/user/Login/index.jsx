@@ -80,7 +80,24 @@ const Login = () => {
           initialValues={{
             autoLogin: true,
           }}
-          
+          submitter={{
+            searchConfig: {
+              resetText: 'Limpiar',
+              submitText: 'Ingresar',
+            },
+            // Configure the properties of the button
+            resetButtonProps: {
+              style: {
+                // Hide the reset button
+                display: 'none',
+              },
+            },
+            submitButtonProps: {
+              type: 'primary',
+              block: true,
+              size: 'large'
+            },
+          }}
           onFinish={async (values) => {
             await handleSubmit(values);
           }}

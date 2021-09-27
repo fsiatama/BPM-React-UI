@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Ant Design Pro",
+    "title": "BPM",
     "version": "1.0.0"
   },
   "servers": [
@@ -16,7 +16,7 @@
     "/api/currentUser": {
       "get": {
         "tags": ["api"],
-        "description": "获取当前的用户",
+        "description": "Obtener usuario actual",
         "operationId": "currentUser",
         "responses": {
           "200": {
@@ -45,14 +45,14 @@
     },
     "/api/login/captcha": {
       "post": {
-        "description": "发送验证码",
+        "description": "Envíe el código de verificación",
         "operationId": "getFakeCaptcha",
         "tags": ["login"],
         "parameters": [
           {
             "name": "phone",
             "in": "query",
-            "description": "手机号",
+            "description": "número de teléfono",
             "schema": {
               "type": "string"
             }
@@ -74,7 +74,7 @@
     },
     "/api/login/outLogin": {
       "post": {
-        "description": "登录接口",
+        "description": "Interfaz de inicio de sesión",
         "operationId": "outLogin",
         "tags": ["login"],
         "responses": {
@@ -105,10 +105,10 @@
     "/api/login/account": {
       "post": {
         "tags": ["login"],
-        "description": "登录接口",
+        "description": "Interfaz de inicio de sesión",
         "operationId": "login",
         "requestBody": {
-          "description": "登录系统",
+          "description": "iniciar sesión en el sistema",
           "content": {
             "application/json": {
               "schema": {
@@ -167,13 +167,13 @@
     "/api/tasks": {
       "get": {
         "tags": ["tasks"],
-        "description": "获取规则列表",
+        "description": "Obtén la lista de reglas",
         "operationId": "tasks",
         "parameters": [
           {
             "name": "user",
             "in": "query",
-            "description": "当前的页码",
+            "description": "Número de página actual",
             "schema": {
               "type": "string"
             }
@@ -204,7 +204,7 @@
       },
       "post": {
         "tags": ["tasks"],
-        "description": "新建规则",
+        "description": "Nueva regla",
         "operationId": "addRule",
         "responses": {
           "200": {
@@ -231,7 +231,7 @@
       },
       "put": {
         "tags": ["tasks"],
-        "description": "新建规则",
+        "description": "Nueva regla",
         "operationId": "updateRule",
         "responses": {
           "200": {
@@ -258,7 +258,7 @@
       },
       "delete": {
         "tags": ["tasks"],
-        "description": "删除规则",
+        "description": "Eliminar regla",
         "operationId": "removeRule",
         "responses": {
           "200": {
@@ -461,7 +461,7 @@
           },
           "total": {
             "type": "integer",
-            "description": "列表的内容总数",
+            "description": "El número total de contenidos de la lista.",
             "format": "int32"
           },
           "success": {
@@ -504,15 +504,15 @@
         "properties": {
           "errorCode": {
             "type": "string",
-            "description": "业务约定的错误码"
+            "description": "Código de error del acuerdo comercial"
           },
           "errorMessage": {
             "type": "string",
-            "description": "业务上的错误信息"
+            "description": "Desinformación empresarial"
           },
           "success": {
             "type": "boolean",
-            "description": "业务上的请求是否成功"
+            "description": "Si la solicitud comercial se ha realizado correctamente"
           }
         }
       },
@@ -527,7 +527,7 @@
           },
           "total": {
             "type": "integer",
-            "description": "列表的内容总数",
+            "description": "El número total de contenidos de la lista.",
             "format": "int32"
           },
           "success": {
@@ -537,7 +537,7 @@
       },
       "NoticeIconItemType": {
         "title": "NoticeIconItemType",
-        "description": "已读未读列表的枚举",
+        "description": "Enumeración de listas leídas y no leídas",
         "type": "string",
         "properties": {},
         "enum": ["notification", "message", "event"]

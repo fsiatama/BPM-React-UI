@@ -7,9 +7,9 @@ const Settings = {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: '',
+  title: 'BPM',
   pwa: false,
-  logo: '',
+  logo: 'https://royal-tec.com/images/logoroyaltec.png',
   iconfontUrl: '',
 };
 export default Settings;

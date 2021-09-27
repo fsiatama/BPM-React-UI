@@ -1,9 +1,8 @@
 import { PageLoading } from '@ant-design/pro-layout';
-import { history, Link } from 'umi';
+import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
-import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 /** When obtaining user information is slow, a loading */
@@ -57,18 +56,7 @@ export const layout = ({ initialState }) => {
         history.push(loginPath);
       }
     },
-    links: isDev
-      ? [
-          <Link to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI Documentation</span>
-          </Link>,
-          <Link to="/~docs">
-            <BookOutlined />
-            <span>Business component documentation</span>
-          </Link>,
-        ]
-      : [],
+    links: [],
     menuHeaderRender: undefined,
     // Customize the 403 page
     // unAccessible: <div>unAccessible</div>,
