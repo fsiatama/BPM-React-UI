@@ -7,27 +7,9 @@ import ProTable from '@ant-design/pro-table';
 import { ModalForm, ProFormSwitch, ProFormTextArea } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import UpdateForm from './components/UpdateForm';
-import { addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
+import { updateRule, removeRule } from '@/services/ant-design-pro/api';
 import { osTasks, completeTask, osStart } from '@/services/service-orders/api';
-/**
- * @en-US Add node
- * @param fields
- */
 
-const handleAdd = async (fields) => {
-  const hide = message.loading('Adding');
-
-  try {
-    await osStart({ ...fields });
-    hide();
-    message.success('Added successfully');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('Adding failed, please try again!');
-    return false;
-  }
-};
 /**
  * @en-US Update node
  *
@@ -100,10 +82,7 @@ const handleRemove = async (selectedRows) => {
 };
 
 const TableList = () => {
-  /**
-   * @en-US Pop-up window of new window
-   *  */
-  const [createModalVisible, handleModalVisible] = useState(false);
+ 
   /**
    * @en-US The pop-up window of the distribution update window
    * */
@@ -195,20 +174,6 @@ const TableList = () => {
         })}
         actionRef={actionRef}
         rowKey="id"
-        search={{
-          labelWidth: 120,
-        }}
-        toolBarRender={() => isAdmin ? [
-          <Button
-            type="primary"
-            key="primary"
-            onClick={() => {
-              handleModalVisible(true);
-            }}
-          >
-            <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
-          </Button>,
-        ]: []}
         request={async () => {
           return osTasks({ username: currentUser?.access})
         }}
@@ -256,28 +221,7 @@ const TableList = () => {
           </Button>
         </FooterToolbar>
       )}
-      <ModalForm
-        title= 'Nueva Orden de servicio'
-        width="400px"
-        visible={createModalVisible}
-        onVisibleChange={handleModalVisible}
-        onFinish={async (value) => {
-          const success = await handleAdd(value);
-
-          if (success) {
-            handleModalVisible(false);
-
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
-      >
-        <ProFormTextArea width="md" name="comment" label="Anotación"/>
-        <ProFormSwitch name="transferencia" label="Es transferencia?" />
-        <ProFormSwitch name="inventario" label="Hay inventario?" />
-        <ProFormSwitch name="electronico" label="Es medio electrónico?" />
-      </ModalForm>
+      
       <UpdateForm
         onSubmit={async (value) => {
           const success = await handleUpdate(value);

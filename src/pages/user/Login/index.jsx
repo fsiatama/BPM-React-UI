@@ -27,8 +27,8 @@ const Login = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
   const intl = useIntl();
 
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
+  const fetchUserInfo = async (username) => {
+    const userInfo = await initialState?.fetchUserInfo?.(username);
 
     console.log(userInfo)
 
@@ -47,8 +47,9 @@ const Login = () => {
           id: 'pages.login.success',
           defaultMessage: 'login successful!',
         });
+        localStorage.setItem("currentAuthority", msg.currentAuthority)
         message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo();
+        await fetchUserInfo(msg.currentAuthority);
         /** This method will jump to the location of the redirect parameter */
 
         if (!history) return;

@@ -3,6 +3,15 @@
 /* eslint-disable */
 import request from 'umi-request';
 
+/** Get the list of service orders GET /api/os */
+
+export async function osList(options) {
+  return request('/api/os', {
+    method: 'get',
+    ...(options || {}),
+  });
+}
+
 /** Get the list of service orders tasks GET /api/os */
 
 export async function osTasks(params, options) {
@@ -27,10 +36,10 @@ export async function completeTask(params, options) {
 }
 
 export async function osStart(params, options) {
-  console.log(params);
-  const { transferencia, inventario, electronico } = params.transferencia || false;
+  const { transferencia, inventario, electronico, comment } = params || false;
 
   const obj = {
+    businessKey: comment,
     variables: {
       transferencia: {
         value: transferencia,

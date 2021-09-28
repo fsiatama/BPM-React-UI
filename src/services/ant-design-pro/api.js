@@ -4,17 +4,24 @@
 import { request } from 'umi';
 /** Get current user GET /api/currentUser */
 
-export async function currentUser(options) {
-  return request('/api/currentUser', {
-    method: 'GET',
+export async function currentUser(body, options) {
+  console.log(body);
+  return request('/api/login/current-user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      username: body,
+    },
     ...(options || {}),
   });
 }
 /** Log out interface POST /api/login/outLogin */
 
 export async function outLogin(options) {
-  return request('/api/login/outLogin', {
-    method: 'POST',
+  return request('/api/login/log-out', {
+    method: 'GET',
     ...(options || {}),
   });
 }

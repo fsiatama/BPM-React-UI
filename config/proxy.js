@@ -9,7 +9,7 @@
 export default {
   dev: {
     '/api/': {
-      target: 'http://localhost:3000/v1',
+      target: 'http://172.17.32.1:3000/v1',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',
@@ -18,7 +18,7 @@ export default {
   },
   test: {
     '/api/': {
-      target: 'https://localhost:3000/v1',
+      target: 'http://172.17.32.1:3000/v1',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',
@@ -27,7 +27,7 @@ export default {
   },
   pre: {
     '/api/': {
-      target: 'http://localhost:3000/v1',
+      target: 'http://172.17.32.1:3000/v1',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',

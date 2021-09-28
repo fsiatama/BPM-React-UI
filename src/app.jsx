@@ -15,9 +15,9 @@ export const initialStateConfig = {
  * */
 
 export async function getInitialState() {
-  const fetchUserInfo = async () => {
+  const fetchUserInfo = async (username) => {
     try {
-      const msg = await queryCurrentUser();
+      const msg = await queryCurrentUser(username);
       return msg.data;
     } catch (error) {
       history.push(loginPath);
@@ -27,7 +27,8 @@ export async function getInitialState() {
   }; // If it is a login page, do not execute
 
   if (history.location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
+    const username = localStorage.getItem('currentAuthority')
+    const currentUser = await fetchUserInfo(username);
     return {
       fetchUserInfo,
       currentUser,
