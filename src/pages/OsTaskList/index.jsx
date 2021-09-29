@@ -1,5 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer } from 'antd';
+import { Button, message, Input, Drawer, ConfigProvider } from 'antd';
+import esESIntl from 'antd/lib/locale/es_ES';
 import React, { useState, useRef } from 'react';
 import { useIntl, FormattedMessage, useModel } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
@@ -167,24 +168,26 @@ const TableList = () => {
   ];
   return (
     <PageContainer>
-      <ProTable
-        headerTitle={intl.formatMessage({
-          id: 'pages.searchTable.title',
-          defaultMessage: 'Enquiry form',
-        })}
-        actionRef={actionRef}
-        rowKey="id"
-        request={async () => {
-          return osTasks({ username: currentUser?.access})
-        }}
-        columns={columns}
-        search={false}
-        rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
-          },
-        }}
-      />
+      <ConfigProvider locale={esESIntl}>
+        <ProTable
+          headerTitle={intl.formatMessage({
+            id: 'pages.searchTable.title',
+            defaultMessage: 'Enquiry form',
+          })}
+          actionRef={actionRef}
+          rowKey="id"
+          request={async () => {
+            return osTasks({ username: currentUser?.access})
+          }}
+          columns={columns}
+          search={false}
+          rowSelection={{
+            onChange: (_, selectedRows) => {
+              setSelectedRows(selectedRows);
+            },
+          }}
+        />
+      </ConfigProvider>
       {selectedRowsState?.length > 0 && (
         <FooterToolbar
           extra={

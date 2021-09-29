@@ -1,5 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Drawer, Timeline, Typography } from 'antd';
+import { Button, message, Drawer, Timeline, Typography, ConfigProvider  } from 'antd';
+import esESIntl from 'antd/lib/locale/es_ES';
 import moment from 'moment'
 import React, { useState, useRef } from 'react';
 import { useIntl, FormattedMessage, useModel } from 'umi';
@@ -214,149 +215,152 @@ const TableList = () => {
     },
   ];
   return (
-    <PageContainer>
-      <ProTable
-        headerTitle='Ordenes de Servicio'
-        actionRef={actionRef}
-        rowKey="id"
-        toolBarRender={() => isAdmin ? [
-          <Button
-            type="primary"
-            key="primary"
-            onClick={() => {
-              handleModalVisible(true);
-            }}
-          >
-            <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
-          </Button>,
-        ]: []}
-        request={async () => {
-          return osList()
-        }}
-        columns={columns}
-        search={false}
-        rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
-          },
-        }}
-      />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              <FormattedMessage id="pages.searchTable.chosen" defaultMessage="Chosen" />{' '}
-              <a
-                style={{
-                  fontWeight: 600,
-                }}
-              >
-                {selectedRowsState.length}
-              </a>{' '}
-              <FormattedMessage id="pages.searchTable.item" defaultMessage="项" />
-            </div>
-          }
-        >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            <FormattedMessage
-              id="pages.searchTable.batchDeletion"
-              defaultMessage="Batch deletion"
-            />
-          </Button>
-          <Button type="primary">
-            <FormattedMessage
-              id="pages.searchTable.batchApproval"
-              defaultMessage="Batch approval"
-            />
-          </Button>
-        </FooterToolbar>
-      )}
-      <ModalForm
-        title= 'Nueva Orden de servicio'
-        width="400px"
-        visible={createModalVisible}
-        onVisibleChange={handleModalVisible}
-        onFinish={async (value) => {
-          const success = await handleAdd(value);
-
-          if (success) {
-            handleModalVisible(false);
-
-            if (actionRef.current) {
-              actionRef.current.reload();
+    <ConfigProvider locale={esESIntl}>
+      <PageContainer>
+        <ProTable
+          headerTitle='Ordenes de Servicio'
+          actionRef={actionRef}
+          rowKey="id"
+          toolBarRender={() => isAdmin ? [
+            <Button
+              type="primary"
+              key="primary"
+              onClick={() => {
+                handleModalVisible(true);
+              }}
+            >
+              <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
+            </Button>,
+          ]: []}
+          request={async () => {
+            return osList()
+          }}
+          columns={columns}
+          search={false}
+          rowSelection={{
+            onChange: (_, selectedRows) => {
+              setSelectedRows(selectedRows);
+            },
+          }}
+        />
+        {selectedRowsState?.length > 0 && (
+          <FooterToolbar
+            extra={
+              <div>
+                <FormattedMessage id="pages.searchTable.chosen" defaultMessage="Chosen" />{' '}
+                <a
+                  style={{
+                    fontWeight: 600,
+                  }}
+                >
+                  {selectedRowsState.length}
+                </a>{' '}
+                <FormattedMessage id="pages.searchTable.item" defaultMessage="项" />
+              </div>
             }
-          }
-        }}
-      >
-        <ProFormTextArea width="md" name="comment" label="Anotación" rules={[
-                  {
-                    required: true,
-                    message: (
-                      <FormattedMessage
-                        id="pages.searchTable.comment.required"
-                        defaultMessage="please enter a description!"
-                      />
-                    ),
-                  },
-                ]}/>
-        <ProFormSwitch name="transferencia" label="Es transferencia?" />
-        <ProFormSwitch name="inventario" label="Hay inventario?" />
-        <ProFormSwitch name="electronico" label="Es medio electrónico?" />
-      </ModalForm>
-      <UpdateForm
-        onSubmit={async (value) => {
-          const success = await handleUpdate(value);
-
-          if (success) {
-            handleUpdateModalVisible(false);
-            setCurrentRow(undefined);
-
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
-        onCancel={() => {
-          handleUpdateModalVisible(false);
-
-          if (!showDetail) {
-            setCurrentRow(undefined);
-          }
-        }}
-        updateModalVisible={updateModalVisible}
-        values={currentRow || {}}
-      />
-
-      <Drawer
-        width={600}
-        visible={showDetail}
-        onClose={() => {
-          setCurrentRow(undefined);
-          setShowDetail(false);
-        }}
-        closable={false}
-      >
-        {currentRow?.businessKey && (
-          <ProDescriptions
-            column={1}
-            title={currentRow?.businessKey}
-            request={async () => ({
-              data: currentRow || {},
-            })}
-            params={{
-              id: currentRow?.businessKey,
-            }}
-            columns={columns}
-          />
+          >
+            <Button
+              onClick={async () => {
+                await handleRemove(selectedRowsState);
+                setSelectedRows([]);
+                actionRef.current?.reloadAndRest?.();
+              }}
+            >
+              <FormattedMessage
+                id="pages.searchTable.batchDeletion"
+                defaultMessage="Batch deletion"
+              />
+            </Button>
+            <Button type="primary">
+              <FormattedMessage
+                id="pages.searchTable.batchApproval"
+                defaultMessage="Batch approval"
+              />
+            </Button>
+          </FooterToolbar>
         )}
-      </Drawer>
-    </PageContainer>
+        <ModalForm
+          title= 'Nueva Orden de servicio'
+          width="400px"
+          visible={createModalVisible}
+          onVisibleChange={handleModalVisible}
+          onFinish={async (value) => {
+            const success = await handleAdd(value);
+
+            if (success) {
+              handleModalVisible(false);
+
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
+        >
+          <ProFormTextArea width="md" name="comment" label="Anotación" placeholder="OS Id" rules={[
+                    {
+                      required: true,
+                      message: (
+                        <FormattedMessage
+                          id="pages.searchTable.comment.required"
+                          defaultMessage="please enter a description!"
+                        />
+                      ),
+                    },
+                  ]}/>
+          <ProFormSwitch name="transferencia" label="Es transferencia?" />
+          <ProFormSwitch name="inventario" label="Hay inventario?" />
+          <ProFormSwitch name="electronico" label="Es medio electrónico?" />
+        </ModalForm>
+        <UpdateForm
+          onSubmit={async (value) => {
+            const success = await handleUpdate(value);
+
+            if (success) {
+              handleUpdateModalVisible(false);
+              setCurrentRow(undefined);
+
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
+          onCancel={() => {
+            handleUpdateModalVisible(false);
+
+            if (!showDetail) {
+              setCurrentRow(undefined);
+            }
+          }}
+          updateModalVisible={updateModalVisible}
+          values={currentRow || {}}
+        />
+
+        <Drawer
+          width={600}
+          visible={showDetail}
+          onClose={() => {
+            setCurrentRow(undefined);
+            setShowDetail(false);
+          }}
+          closable={false}
+        >
+          {currentRow?.businessKey && (
+            <ProDescriptions
+              column={1}
+              title={currentRow?.businessKey}
+              request={async () => ({
+                data: currentRow || {},
+              })}
+              params={{
+                id: currentRow?.businessKey,
+              }}
+              columns={columns}
+            />
+          )}
+        </Drawer>
+      </PageContainer>
+    </ConfigProvider>
+    
   );
 };
 
